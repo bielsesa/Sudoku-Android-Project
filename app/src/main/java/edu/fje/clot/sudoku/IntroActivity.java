@@ -5,6 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ * Activitat principal des d'on comença l'aplicació.
+ *
+ * @author Pau Desumvila
+ * @version 1.0 09/11/2018
+ *
+ */
+
 public class IntroActivity extends AppCompatActivity {
 
     @Override

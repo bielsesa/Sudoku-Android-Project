@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * Activitat per inicialitzar la pàgina web d'ajuda.
+ * @author Biel Serrano
+ * @version 1.0 09/11/2018
+ */
+
 public class WebAjudaActivity extends AppCompatActivity {
 
     WebView wvAjuda;

@@ -100,7 +100,7 @@ public class PuntuacionsDbHelper extends SQLiteOpenHelper {
             db.insertOrThrow(PuntuacionsContract.TaulaPuntuacions.NOM_TAULA, null, values);
             db.setTransactionSuccessful();
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to add post to database");
+            Log.d(TAG, "Error a l'hora d'intentar afegir una nova puntuació a la base de dades");
         } finally {
             db.endTransaction();
         }
@@ -112,7 +112,7 @@ public class PuntuacionsDbHelper extends SQLiteOpenHelper {
      * @author Biel Serrano
      * @version 1.0 12/11/2018
      */
-    public List<Puntuacio> getAllPosts() {
+    public List<Puntuacio> getAllScores() {
         List<Puntuacio> puntuacions = new ArrayList<>();
 
         // SELECT * FROM POSTS
@@ -131,12 +131,12 @@ public class PuntuacionsDbHelper extends SQLiteOpenHelper {
                 do {
                     Puntuacio novaPuntuacio = new Puntuacio();
                     novaPuntuacio.nomJugador = cursor.getString(cursor.getColumnIndex(PuntuacionsContract.TaulaPuntuacions.COLUMNA_NOM));
-                    novaPuntuacio.punts = cursor.getInt(cursor.getColumnIndex(PuntuacionsContract.TaulaPuntuacions.COLUMNA_PUNTS));;
+                    novaPuntuacio.punts = cursor.getInt(cursor.getColumnIndex(PuntuacionsContract.TaulaPuntuacions.COLUMNA_PUNTS));
                     puntuacions.add(novaPuntuacio);
                 } while(cursor.moveToNext());
             }
         } catch (Exception e) {
-            Log.d(TAG, "Error while trying to get posts from database");
+            Log.d(TAG, "Error a l'hora d'intentar agafar la informació de la base de dades");
         } finally {
             if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
@@ -149,7 +149,7 @@ public class PuntuacionsDbHelper extends SQLiteOpenHelper {
      * Mètode per eliminar totes les dades de la taula de puntuacions.
      * @author Biel Serrano
      * @version 1.0 12/11/2018
-     * 
+     *
      */
     public void deleteAllPostsAndUsers() {
         SQLiteDatabase db = getWritableDatabase();

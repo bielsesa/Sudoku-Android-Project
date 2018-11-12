@@ -3,6 +3,7 @@
     package="edu.fje.clot.sudoku">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_launcher"
@@ -17,14 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuPrincipalActivity">
-        </activity>
-        <activity android:name=".PartidaActivity">
-        </activity>
+        <activity android:name=".MenuPrincipalActivity"></activity>
+        <activity android:name=".PartidaActivity"></activity>
         <activity android:name=".WebAjudaActivity">
             <intent-filter>
-                <action android:name="WebAjudaACtivity"/>
+                <action android:name="WebAjudaACtivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="http" />
             </intent-filter>
         </activity>

@@ -3,6 +3,8 @@
     package="edu.fje.clot.sudoku">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuPrincipalActivity"></activity>
-        <activity android:name=".PartidaActivity"></activity>
+        <activity android:name=".MenuPrincipalActivity" />
+        <activity android:name=".PartidaActivity" />
         <activity android:name=".WebAjudaActivity">
             <intent-filter>
                 <action android:name="WebAjudaACtivity" />

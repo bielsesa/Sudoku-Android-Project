@@ -23,8 +23,8 @@ import java.util.Random;
 
 public class PartidaActivity extends AppCompatActivity{
 
-    final Context context = this;
-    String[] numsSudokuBase;
+    private final Context context = this;
+    private String[] numsSudokuBase;
     private ArrayList<String> numsSudokuJoc;
     private ArrayList<String> numsSudokuSolucio;
     private GridView gridView;
@@ -32,6 +32,8 @@ public class PartidaActivity extends AppCompatActivity{
     private Button btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight, btNine;
     private static long tempsIniciPartida;
     private static long tempsFinalPartida;
+    private SudokuDbHelper sudoDButil;
+    private SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,8 @@ public class PartidaActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         // A partir d'aquí s'agafa el sudoku de la base de dades.
-        SudokuDbHelper sudoDButil = SudokuDbHelper.getInstance(this); // Better han getBaseContext()
-        SQLiteDatabase db = sudoDButil.getWritableDatabase();
+        sudoDButil = SudokuDbHelper.getInstance(this); // Better han getBaseContext()
+
 
         String sudo = sudoDButil.obteSudokus();
 
@@ -82,8 +84,7 @@ public class PartidaActivity extends AppCompatActivity{
 
         // Aquí s'obté el GridView del layout i es possa el seu adapter.
         gridView = findViewById(R.id.gridView);
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, numsSudokuJoc);
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, numsSudokuJoc);
         gridView.setAdapter(adapter);
 
         // A partir d'aquí s'ha d'implementar com fer que es puguin inserir números. Una idea és: botons abaix del sudoku.
@@ -230,9 +231,20 @@ public class PartidaActivity extends AppCompatActivity{
 
             // Mostra el dialog
             alertDialog.show();
-            tempsFinalPartida = System.currentTimeMillis(); // Temps en la que s'acaba la partida
+            /*tempsFinalPartida = System.currentTimeMillis(); // Temps en la que s'acaba la partida
             long puntuacio = (50000 - (tempsFinalPartida - tempsIniciPartida)) / 100; //El 50000 és una puntuació base
-            System.out.println("Puntuació: " + puntuacio);
+            System.out.println("Puntuació: " + puntuacio);*/
+            calculateAndSaveScore();
         }
+    }
+
+    public void calculateAndSaveScore() {
+        tempsFinalPartida = System.currentTimeMillis(); // Temps en el que s'acaba la partida.
+        long puntuacio =  5000 - (tempsFinalPartida - tempsIniciPartida) / 100;
+        Puntuacio p = new Puntuacio();
+        p.nomJugador = "Solaire";
+        p.punts = (int) puntuacio;
+        System.out.println("Puntuació: " + puntuacio); // Debug per comprovar el càlcul de la puntuació
+        sudoDButil.afegeixPuntuacio(p);
     }
 }

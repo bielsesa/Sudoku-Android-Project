@@ -31,10 +31,10 @@ public class MenuPrincipalActivity extends AppCompatActivity {
 
         // Creació o accés a la base de dades.
         // Si la bd ja existeix, no farà res.
-        /*SudokuDbHelper puntuacions = SudokuDbHelper.getInstance(this);
+        SudokuDbHelper puntuacions = SudokuDbHelper.getInstance(this);
         SQLiteDatabase db = puntuacions.getWritableDatabase();
 
-        // Cursor per agafar les dades de la bd
+        // Cursor per agafar les dades de la bd (s'agafen 3 puntuacions, les més altes)
         Cursor cursorPuntuacions = db.rawQuery("select * from puntuacions ORDER BY punts DESC LIMIT 3", null);
 
         // Creació del ListView per mostrar les puntuacions
@@ -42,7 +42,7 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         // Setup del CursorAdapter per les puntuacions
         PuntuacionsCursorAdapter puntuacionsAdapter = new PuntuacionsCursorAdapter(this, cursorPuntuacions);
         // I a continuació es connecta l'adaptador amb el ListView
-        lvPuntuacions.setAdapter(puntuacionsAdapter);*/
+        lvPuntuacions.setAdapter(puntuacionsAdapter);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

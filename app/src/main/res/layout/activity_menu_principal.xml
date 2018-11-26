@@ -16,7 +16,9 @@
         android:layout_height="200dp"
         android:layout_marginBottom="150dp"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/btJugar"/>
+        android:layout_above="@id/btJugar"
+        android:background="@color/white"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/btJugar"

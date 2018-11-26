@@ -1,10 +1,12 @@
 package edu.fje.clot.sudoku;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,14 +23,20 @@ import java.util.Random;
 
 public class PartidaActivity extends AppCompatActivity{
 
+    final Context context = this;
+    String[] numsSudokuBase;
     private ArrayList<String> numsSudokuJoc;
+    private ArrayList<String> numsSudokuSolucio;
     private GridView gridView;
     private ArrayAdapter<String> adapter;
     private Button btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight, btNine;
+    private static long tempsIniciPartida;
+    private static long tempsFinalPartida;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tempsIniciPartida = System.currentTimeMillis();
         setContentView(R.layout.activity_partida);
         btOne = findViewById(R.id.btOne);
         btTwo = findViewById(R.id.btTwo);
@@ -50,13 +58,15 @@ public class PartidaActivity extends AppCompatActivity{
         String sudo = sudoDButil.obteSudokus();
 
         // A partir d'aquí es prepara el sudoku per ficar-lo al GridView.
-        final String[] numsSudokuBase = sudo.split(",");
-        numsSudokuJoc = new ArrayList<String>();
+        numsSudokuBase = sudo.split(",");
+        numsSudokuJoc = new ArrayList<>();
+        numsSudokuSolucio = new ArrayList<>();
         Random rand = new Random();
-        int numerosAEliminar = 25, randIndex;
+        int numerosAEliminar = 1, randIndex;
 
         for (int i = 0; i < numsSudokuBase.length; i++) {
             numsSudokuJoc.add(numsSudokuBase[i]);
+            numsSudokuSolucio.add(numsSudokuBase[i]);
         }
 
         // I aquí es seleccionen els índex a esborrar amb un número aleatori.
@@ -68,12 +78,7 @@ public class PartidaActivity extends AppCompatActivity{
                     numerosAEliminar--;
                 }
             }
-
         }
-
-        /*for (int i = 0; i < numsSudokuJoc.size(); i++) {
-
-        }*/
 
         // Aquí s'obté el GridView del layout i es possa el seu adapter.
         gridView = findViewById(R.id.gridView);
@@ -94,6 +99,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "1");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btTwo.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +108,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "2");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btThree.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +117,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "3");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btFour.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +126,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "4");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btFive.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +135,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "5");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btSix.setOnClickListener(new View.OnClickListener() {
@@ -134,6 +144,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "6");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btSeven.setOnClickListener(new View.OnClickListener() {
@@ -142,6 +153,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "7");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btEight.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +162,7 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "8");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
                     btNine.setOnClickListener(new View.OnClickListener() {
@@ -158,17 +171,14 @@ public class PartidaActivity extends AppCompatActivity{
                             numsSudokuJoc.remove(position);
                             numsSudokuJoc.add(position, "9");
                             adapter.notifyDataSetChanged();
+                            checkSudokuCompletion();
                         }
                     });
-                }
-
-                if (numsSudokuJoc.equals(numsSudokuBase)) {
-
+                    //checkSudokuCompletion();
                 }
             }
-
         });
-
+        //checkSudokuCompletion();
     }
 
     @Override
@@ -195,46 +205,34 @@ public class PartidaActivity extends AppCompatActivity{
                 return super.onOptionsItemSelected(item);
         }
     }
- /*
-    public void showPopup(View v) {
-        android.widget.PopupMenu popup = new android.widget.PopupMenu(this, v);
-        popup.setOnMenuItemClickListener(this);
-        popup.inflate(R.menu.popup_menu);
-        popup.show();
-    }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.num1:
-                Toast.makeText(this, "Número 1 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num2:
-                Toast.makeText(this, "Número 2 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num3:
-                Toast.makeText(this, "Número 3 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num4:
-                Toast.makeText(this, "Número 4 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num5:
-                Toast.makeText(this, "Número 5 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num6:
-                Toast.makeText(this, "Número 6 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num7:
-                Toast.makeText(this, "Número 7 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num8:
-                Toast.makeText(this, "Número 8 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.num9:
-                Toast.makeText(this, "Número 9 seleccionat", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return false;
+    public void checkSudokuCompletion() {
+        if (numsSudokuJoc.equals(numsSudokuSolucio)) {
+
+            final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+            // Títol del dialog
+            alertDialogBuilder.setTitle("HAS GUANYAT!");
+
+            // Missatge del dialog i botons
+            alertDialogBuilder
+                    .setMessage("Prem OK per sortir.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            // si es prem aquest botó, es tanca
+                            // l'activitat actual (la partida)
+                            PartidaActivity.this.finish();
+                        }
+                    });
+            // Crea el dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+
+            // Mostra el dialog
+            alertDialog.show();
+            tempsFinalPartida = System.currentTimeMillis(); // Temps en la que s'acaba la partida
+            long puntuacio = (50000 - (tempsFinalPartida - tempsIniciPartida)) / 100; //El 50000 és una puntuació base
+            System.out.println("Puntuació: " + puntuacio);
         }
-    }*/
+    }
 }

@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,30 +19,47 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PartidaActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, android.widget.PopupMenu.OnMenuItemClickListener {
+public class PartidaActivity extends AppCompatActivity{
+
+    private ArrayList<String> numsSudokuJoc;
+    private GridView gridView;
+    private ArrayAdapter<String> adapter;
+    private Button btOne, btTwo, btThree, btFour, btFive, btSix, btSeven, btEight, btNine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partida);
+        btOne = findViewById(R.id.btOne);
+        btTwo = findViewById(R.id.btTwo);
+        btThree = findViewById(R.id.btThree);
+        btFour = findViewById(R.id.btFour);
+        btFive = findViewById(R.id.btFive);
+        btSix = findViewById(R.id.btSix);
+        btSeven = findViewById(R.id.btSeven);
+        btEight = findViewById(R.id.btEight);
+        btNine = findViewById(R.id.btNine);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // A partir d'aquí s'agafa el sudoku de la base de dades.
         SudokuDbHelper sudoDButil = SudokuDbHelper.getInstance(this); // Better han getBaseContext()
         SQLiteDatabase db = sudoDButil.getWritableDatabase();
 
         String sudo = sudoDButil.obteSudokus();
 
-        String[] numsSudokuBase = sudo.split(",");
-        ArrayList<String> numsSudokuJoc = new ArrayList<String>();
+        // A partir d'aquí es prepara el sudoku per ficar-lo al GridView.
+        final String[] numsSudokuBase = sudo.split(",");
+        numsSudokuJoc = new ArrayList<String>();
         Random rand = new Random();
-        int numerosAEliminar = 5, randIndex;
+        int numerosAEliminar = 25, randIndex;
 
         for (int i = 0; i < numsSudokuBase.length; i++) {
             numsSudokuJoc.add(numsSudokuBase[i]);
         }
 
+        // I aquí es seleccionen els índex a esborrar amb un número aleatori.
         while (numerosAEliminar != 0) {
             randIndex = rand.nextInt(81);
             if (numerosAEliminar != 0) {
@@ -54,26 +71,102 @@ public class PartidaActivity extends AppCompatActivity implements PopupMenu.OnMe
 
         }
 
-        for (int i = 0; i < numsSudokuJoc.size(); i++) {
+        /*for (int i = 0; i < numsSudokuJoc.size(); i++) {
 
-        }
+        }*/
 
-        GridView gridView = findViewById(R.id.gridView);
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        // Aquí s'obté el GridView del layout i es possa el seu adapter.
+        gridView = findViewById(R.id.gridView);
+        adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, numsSudokuJoc);
-
         gridView.setAdapter(adapter);
 
+        // A partir d'aquí s'ha d'implementar com fer que es puguin inserir números. Una idea és: botons abaix del sudoku.
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                /*Toast.makeText(getApplicationContext(),
-                        ((TextView) v).getText(), Toast.LENGTH_SHORT).show();*/
+                                    final int position, long id) {
                 if (adapter.getItem(position).equals(" ")) {
-                    showPopup(parent);
+                    Toast.makeText(getApplicationContext(),
+                            ((TextView) v).getText() + "Casilla seleccionada!", Toast.LENGTH_SHORT).show();
+                    btOne.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "1");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btTwo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "2");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btThree.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "3");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btFour.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "4");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btFive.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "5");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btSix.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "6");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btSeven.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "7");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btEight.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "8");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    btNine.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            numsSudokuJoc.remove(position);
+                            numsSudokuJoc.add(position, "9");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+
+                if (numsSudokuJoc.equals(numsSudokuBase)) {
+
                 }
             }
+
         });
 
     }
@@ -102,7 +195,7 @@ public class PartidaActivity extends AppCompatActivity implements PopupMenu.OnMe
                 return super.onOptionsItemSelected(item);
         }
     }
-
+ /*
     public void showPopup(View v) {
         android.widget.PopupMenu popup = new android.widget.PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
@@ -143,6 +236,5 @@ public class PartidaActivity extends AppCompatActivity implements PopupMenu.OnMe
             default:
                 return false;
         }
-    }
-
+    }*/
 }

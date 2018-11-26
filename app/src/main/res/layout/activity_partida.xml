@@ -1,25 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-
+    android:background="@color/white"
+    android:orientation="vertical">
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridView"
-        android:numColumns="9"
-        android:gravity="center"
-        android:columnWidth="50dp"
-        android:stretchMode="columnWidth"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:onClick="showPopup"
-        >
-    </GridView>
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl01"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridView"
+            android:numColumns="9"
+            android:gravity="center"
+            android:columnWidth="50dp"
+            android:stretchMode="columnWidth"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+        </GridView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl02"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_alignBottom="@+id/gridView">
+
+    <Button
+        android:id="@+id/btOne"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="1"/>
+    <Button
+        android:id="@+id/btTwo"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="2"
+        android:layout_toRightOf="@+id/btOne"/>
+    <Button
+        android:id="@+id/btThree"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="3"
+        android:layout_toRightOf="@+id/btTwo"/>
+    <Button
+        android:id="@+id/btFour"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="4"
+        android:layout_toRightOf="@+id/btThree"/>
+    <Button
+        android:id="@+id/btFive"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="5"
+        android:layout_toRightOf="@+id/btFour"/>
+    <Button
+        android:id="@+id/btSix"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="6"
+        android:layout_below="@+id/btOne"/>
+    <Button
+        android:id="@+id/btSeven"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="7"
+        android:layout_toRightOf="@+id/btSix"
+        android:layout_alignBaseline="@+id/btSix"/>
+    <Button
+        android:id="@+id/btEight"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="8"
+        android:layout_toRightOf="@+id/btSeven"
+        android:layout_alignBaseline="@+id/btSix"/>
+    <Button
+        android:id="@+id/btNine"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="9"
+        android:layout_toRightOf="@+id/btEight"
+        android:layout_alignBaseline="@+id/btSix"/>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -23,6 +23,7 @@ import android.widget.ListView;
 public class MenuPrincipalActivity extends AppCompatActivity {
 
     Button btJugar;
+    PuntuacionsCursorAdapter puntuacionsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,39 @@ public class MenuPrincipalActivity extends AppCompatActivity {
         // Creació del ListView per mostrar les puntuacions
         ListView lvPuntuacions = findViewById(R.id.lvPuntuacions);
         // Setup del CursorAdapter per les puntuacions
-        PuntuacionsCursorAdapter puntuacionsAdapter = new PuntuacionsCursorAdapter(this, cursorPuntuacions);
+        puntuacionsAdapter = new PuntuacionsCursorAdapter(this, cursorPuntuacions);
+        // I a continuació es connecta l'adaptador amb el ListView
+        lvPuntuacions.setAdapter(puntuacionsAdapter);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        btJugar = (Button)findViewById(R.id.btJugar);
+        btJugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuPrincipalActivity.this, PartidaActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    // Faig override al mètode onRestart perquè s'actualitzin els valors de les puntuacions més altes.
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        // Creació o accés a la base de dades.
+        // Si la bd ja existeix, no farà res.
+        SudokuDbHelper puntuacions = SudokuDbHelper.getInstance(this);
+        SQLiteDatabase db = puntuacions.getWritableDatabase();
+
+        // Cursor per agafar les dades de la bd (s'agafen 3 puntuacions, les més altes)
+        Cursor cursorPuntuacions = db.rawQuery("select * from puntuacions ORDER BY punts DESC LIMIT 5", null);
+
+        // Creació del ListView per mostrar les puntuacions
+        ListView lvPuntuacions = findViewById(R.id.lvPuntuacions);
+        // Setup del CursorAdapter per les puntuacions
+        puntuacionsAdapter = new PuntuacionsCursorAdapter(this, cursorPuntuacions);
         // I a continuació es connecta l'adaptador amb el ListView
         lvPuntuacions.setAdapter(puntuacionsAdapter);
 

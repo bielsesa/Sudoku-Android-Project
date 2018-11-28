@@ -13,6 +13,7 @@
     <string name="_7">7</string>
     <string name="_8">8</string>
     <string name="_9">9</string>
+    <string name="jugar">JUGAR</string>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#ED1B26</color>

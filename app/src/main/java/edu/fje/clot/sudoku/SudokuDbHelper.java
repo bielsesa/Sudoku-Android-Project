@@ -136,15 +136,10 @@ public class SudokuDbHelper extends SQLiteOpenHelper {
     public List<Puntuacio> obteTotesLesPuntuacions() {
         List<Puntuacio> puntuacions = new ArrayList<>();
 
-        // SELECT * FROM POSTS
-        // LEFT OUTER JOIN USERS
-        // ON POSTS.KEY_POST_USER_ID_FK = USERS.KEY_USER_ID
         String POSTS_SELECT_QUERY =
                 String.format("SELECT * FROM %s",
                         SudokusContract.TaulaPuntuacions.NOM_TAULA);
 
-        // "getReadableDatabase()" and "getWriteableDatabase()" return the same object (except under low
-        // disk space scenarios)
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(POSTS_SELECT_QUERY, null);
         try {
@@ -178,6 +173,7 @@ public class SudokuDbHelper extends SQLiteOpenHelper {
         //ArrayList<String> sudokus = null;
 
         String SUDOKU_SELECT_QUERY = "SELECT * FROM " + SudokusContract.TaulaSudokus.NOM_TAULA + " LIMIT 1";
+        //String SUDOKU_SELECT_QUERY = "SELECT * FROM " + SudokusContract.TaulaSudokus.NOM_TAULA;
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(SUDOKU_SELECT_QUERY, null);

@@ -24,6 +24,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:listSelector="@drawable/gv_item_selected"
             >
         </GridView>
     </RelativeLayout>
@@ -31,64 +32,79 @@
         android:id="@+id/rl02"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_weight="0.5">
+        android:layout_weight="0.25">
 
         <Button
             android:id="@+id/btOne"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:text="@string/_1"/>
+            android:text="@string/_1"
+            android:textAlignment="center"
+            android:layout_toStartOf="@+id/btTwo"
+            android:layout_alignBottom="@+id/btThree"/>
         <Button
             android:id="@+id/btTwo"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_2"
-            android:layout_toEndOf="@+id/btOne"/>
+            android:textAlignment="center"
+            android:layout_toStartOf="@+id/btThree"
+            android:layout_alignBottom="@+id/btThree"/>
         <Button
             android:id="@+id/btThree"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_3"
-            android:layout_toEndOf="@+id/btTwo"/>
+            android:textAlignment="center"
+            android:layout_centerInParent="true"/>
         <Button
             android:id="@+id/btFour"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_4"
-            android:layout_toEndOf="@+id/btThree"/>
+            android:textAlignment="center"
+            android:layout_toEndOf="@+id/btThree"
+            android:layout_alignBottom="@+id/btThree"/>
         <Button
             android:id="@+id/btFive"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_5"
-            android:layout_toEndOf="@+id/btFour"/>
+            android:textAlignment="center"
+            android:layout_toEndOf="@+id/btFour"
+            android:layout_alignBottom="@+id/btThree"/>
         <Button
             android:id="@+id/btSix"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_6"
-            android:layout_below="@+id/btOne"/>
+            android:textAlignment="center"
+            android:layout_below="@+id/btTwo"
+            android:layout_marginStart="90dp"/>
         <Button
             android:id="@+id/btSeven"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_7"
+            android:textAlignment="center"
             android:layout_toEndOf="@+id/btSix"
-            android:layout_alignBaseline="@+id/btSix"/>
+            android:layout_alignBottom="@+id/btSix"/>
         <Button
             android:id="@+id/btEight"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_8"
+            android:textAlignment="center"
             android:layout_toEndOf="@+id/btSeven"
-            android:layout_alignBaseline="@+id/btSix"/>
+            android:layout_alignBottom="@+id/btSix"/>
         <Button
             android:id="@+id/btNine"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text="@string/_9"
+            android:textAlignment="center"
             android:layout_toEndOf="@+id/btEight"
-            android:layout_alignBaseline="@+id/btSix"/>
+            android:layout_alignBottom="@+id/btSix"/>
 
     </RelativeLayout>
 </LinearLayout>

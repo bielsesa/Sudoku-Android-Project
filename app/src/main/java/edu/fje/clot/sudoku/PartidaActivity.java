@@ -30,6 +30,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Activitat de la partida. Aqui és on s'obte el Sudoku per la partida des de la BD i tambe on
+ * es guarden les noves puntuacions a la BD.
+ */
+
 public class PartidaActivity extends AppCompatActivity{
 
     private final Context context = this;
@@ -79,7 +84,7 @@ public class PartidaActivity extends AppCompatActivity{
         numsSudokuJoc = new ArrayList<>();
         numsSudokuSolucio = new ArrayList<>();
         Random rand = new Random();
-        int numerosAEliminar = 1, randIndex;
+        int numerosAEliminar = 35, randIndex;
 
         for (int i = 0; i < numsSudokuBase.length; i++) {
             numsSudokuJoc.add(numsSudokuBase[i]);
@@ -107,8 +112,6 @@ public class PartidaActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View v,
                                     final int position, long id) {
                 if (adapter.getItem(position).equals(" ")) {
-                    Toast.makeText(getApplicationContext(),
-                            ((TextView) v).getText() + "Casilla seleccionada!", Toast.LENGTH_SHORT).show();
                     btOne.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -222,6 +225,11 @@ public class PartidaActivity extends AppCompatActivity{
 
     // Mètode propi per comprovar que s'ha completat el Sudoku. S'ha de cridar cada cop que es prem
     // un dels botons dels números.
+
+    /**
+     * Metode que s'encarrega de comprovar si el Sudoku esta completat. S'ha de cridar cada cop
+     * que s'insereix un numero nou al Sudoku.
+     */
     public void checkSudokuCompletion() {
         if (numsSudokuJoc.equals(numsSudokuSolucio)) {
 
@@ -252,6 +260,10 @@ public class PartidaActivity extends AppCompatActivity{
 
     // Mètode propi per calcular i guardar la puntuació de l'usuari. Conté una puntuació máxima de 5000
     // i es van restant punts segons el temps que ha trigat l'usuari en completar el Sudoku.
+
+    /**
+     * Metode que s'encarrega de calcular i guardar la puntuacio de la partida.
+     */
     public void calculateAndSaveScore() {
         long tempsFinalPartida = System.currentTimeMillis();
         puntuacio =  5000 - (tempsFinalPartida - tempsIniciPartida) / 100; // Es resta el temps inicial

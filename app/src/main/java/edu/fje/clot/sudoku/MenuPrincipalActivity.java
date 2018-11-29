@@ -13,11 +13,8 @@ import android.widget.Button;
 import android.widget.ListView;
 
 /**
- * Activitat del menú principal des d'on es pot començar el joc i es pot veure la llista d'altres
- * jugades, amb la seva puntuació i el nom del jugador.
- *
- * @author Pau Desumvila
- * @version 1.0 09/11/2018
+ * Activitat del menu principal des d'on es pot començar el joc i es pot veure la llista d'altres
+ * jugades, amb la seva puntuacio i el nom del jugador.
  */
 
 public class MenuPrincipalActivity extends AppCompatActivity {

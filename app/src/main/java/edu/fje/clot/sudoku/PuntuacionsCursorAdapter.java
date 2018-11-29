@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+/**
+ * Cursor adapter per les puntuacions.
+ */
+
 public class PuntuacionsCursorAdapter extends CursorAdapter {
     public PuntuacionsCursorAdapter(Context context, Cursor c) {
         super(context, c, 0);

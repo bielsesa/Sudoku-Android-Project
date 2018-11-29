@@ -4,11 +4,7 @@ import android.provider.BaseColumns;
 
 /**
  * Classe utilitat que defineix el contacte amb la base de dades.
- * Conté la informació de les taules.
- *
- * @author Biel Serrano
- * @version 1.0 09/11/2018
- *
+ * Conte la informacio de les taules.
  */
 public final class SudokusContract{
 

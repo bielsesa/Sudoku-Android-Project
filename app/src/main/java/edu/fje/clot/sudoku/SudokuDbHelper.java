@@ -14,11 +14,7 @@ import static android.content.ContentValues.TAG;
 import static java.lang.System.exit;
 
 /**
- * Classe utilitat per a la manipulació de la base de dades de puntuacions.
- *
- * @author Biel Serrano
- * @version 1.0 09/11/2018
- *
+ * Classe utilitat per a la manipulacio de la base de dades de puntuacions i Sudokus.
  */
 
 public class SudokuDbHelper extends SQLiteOpenHelper {
@@ -48,6 +44,12 @@ public class SudokuDbHelper extends SQLiteOpenHelper {
     public static final String SQL_ESBORRAT_TAULA_SUDOKUS = "DROP TABLE IF EXISTS "
             + SudokusContract.TaulaPuntuacions.NOM_TAULA;
 
+    /**
+     * Metode per obtenir la instancia de la base de dades. En cas de que no existeixi,
+     * la crea, i si ja existeix, nomes la recupera.
+     * @param context Context de l'aplicacio.
+     * @return Instancia de la BD.
+     */
     public static synchronized SudokuDbHelper getInstance(Context context) {
         // Utilitza el context de l'aplicació, el que assegura
         // que no es filtri accidentalment un context d'una Activity.
@@ -58,11 +60,8 @@ public class SudokuDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * El Constructor ha de ser privat per prevenir instanciació directa.
-     * S'ha de fer una trucada al mètode estàtic "getInstance()" en el seu lloc.
-     *
-     * @author Biel Serrano
-     * @version 1.0 09/11/2018
+     * El Constructor ha de ser privat per prevenir instanciacio directa.
+     * S'ha de fer una trucada al metode estatic "getInstance()" en el seu lloc.
      */
     private SudokuDbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -100,10 +99,8 @@ public class SudokuDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Mètode per inserir una puntuació nova a la BD.
+     * Metode per inserir una puntuacio nova a la BD.
      * @param p puntuació del jugador
-     * @author Biel Serrano
-     * @version 1.0 12/11/2018
      */
     public void afegeixPuntuacio(Puntuacio p) {
         // Crea i/o obre la BD per escriure.
@@ -128,44 +125,8 @@ public class SudokuDbHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Mètode per recollir totes les puntuacions de la BD.
-     * @return llista de puntuacions actuals
-     * @author Biel Serrano
-     * @version 1.0 12/11/2018
-     */
-    public List<Puntuacio> obteTotesLesPuntuacions() {
-        List<Puntuacio> puntuacions = new ArrayList<>();
-
-        String POSTS_SELECT_QUERY =
-                String.format("SELECT * FROM %s",
-                        SudokusContract.TaulaPuntuacions.NOM_TAULA);
-
-        SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(POSTS_SELECT_QUERY, null);
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-                    Puntuacio novaPuntuacio = new Puntuacio();
-                    novaPuntuacio.nomJugador = cursor.getString(cursor.getColumnIndex(SudokusContract.TaulaPuntuacions.COLUMNA_NOM));
-                    novaPuntuacio.punts = cursor.getInt(cursor.getColumnIndex(SudokusContract.TaulaPuntuacions.COLUMNA_PUNTS));
-                    puntuacions.add(novaPuntuacio);
-                } while(cursor.moveToNext());
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "Error a l'hora d'intentar agafar la informació de la base de dades");
-        } finally {
-            if (cursor != null && !cursor.isClosed()) {
-                cursor.close();
-            }
-        }
-        return puntuacions;
-    }
-
-    /**
-     * Mètode per obtenir els Sudokus de la BD.
+     * Metode per obtenir els Sudokus de la BD.
      * @return llista de sudokus
-     * @author Biel Serrano
-     * @version 1.0 20/11/2018
      */
     public String obteSudokus() {
         //Random rand = new Random();
